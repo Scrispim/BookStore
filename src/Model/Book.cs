@@ -1,4 +1,8 @@
-﻿namespace BookStore.Model
+﻿using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Batch;
+using Microsoft.OData.Edm;
+
+namespace BookStore.Model
 {
     public class Book
     {
@@ -18,4 +22,5 @@
         Magazine,
         EBook
     }
+
 }

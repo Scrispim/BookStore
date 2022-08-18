@@ -28,14 +28,17 @@ namespace BookStore.Controllers
         [EnableQuery]
         public IActionResult Get()
         {
-            return Ok(_db.Books);
+            var books = _db.Books;
+            return Ok(books);
         }
 
         // Returns a specific book given its key
         [EnableQuery]
         public IActionResult Get(int key)
         {
-            return Ok(_db.Books.FirstOrDefault(c => c.Id == key));
+            var book = _db.Books.FirstOrDefault(c => c.Id == key);
+
+            return Ok(book);
         }
         // Create a new book
         [EnableQuery]

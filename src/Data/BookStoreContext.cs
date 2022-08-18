@@ -1,5 +1,7 @@
-﻿using BookStore.Model;
+﻿using Bogus;
+using BookStore.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BookStore.Data
 {
@@ -16,6 +18,7 @@ namespace BookStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().OwnsOne(c => c.Location);
+
         }
     }
 }

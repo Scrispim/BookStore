@@ -1,5 +1,7 @@
-﻿using BookStore.Model;
+﻿using Bogus;
+using BookStore.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookStore.Data
 {
@@ -50,7 +52,29 @@ namespace BookStore.Data
                     Category = Category.EBook,
                 }
             };
+
             _books.Add(book);
+
+            for (int i = 2; i < 1000; i++)
+            {
+                // Fake Item
+                var ids = i + 1;
+                decimal min = 50m;
+                decimal max = 10000m;
+                int decimals = 2;
+                book = new Faker<Book>()
+                    .RuleFor(x => x.Id, f => ids)
+                    .RuleFor(x => x.ISBN, f => f.Finance.CreditCardNumber())
+                    .RuleFor(x => x.Title, f => f.Company.CompanyName())
+                    .RuleFor(x => x.Author, f => f.Person.FullName)
+                    .RuleFor(x => x.Price, f => f.Commerce.Price(min, max, decimals).FirstOrDefault())
+                    .RuleFor(x => x.Location, f => new Address { City = f.Address.City(), Street = f.Address.StreetName() })
+                    .RuleFor(x => x.Press, f => new Press { Id = ids, Name = f.Commerce.ProductName(), Category = Category.EBook });
+
+                // generate 1000 items
+                _books.Add(book);
+            }
+            
 
             return _books;
         }
