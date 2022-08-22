@@ -1,8 +1,6 @@
-﻿using BookStore.Contract;
-
-namespace BookStore.Model
+﻿namespace BookStore.Contract
 {
-	public class Press : IPress
+	public interface IPress
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

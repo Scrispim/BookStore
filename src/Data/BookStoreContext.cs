@@ -1,11 +1,10 @@
-﻿using Bogus;
+﻿using BookStore.Data.Interface;
 using BookStore.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace BookStore.Data
 {
-    public class BookStoreContext : DbContext
+	public class BookStoreContext : DbContext, IBookStoreContext
     {
         public BookStoreContext(DbContextOptions<BookStoreContext> options)
           : base(options)

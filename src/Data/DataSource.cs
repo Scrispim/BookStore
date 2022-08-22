@@ -1,11 +1,12 @@
 ﻿using Bogus;
+using BookStore.Contract;
 using BookStore.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BookStore.Data
 {
-    public static class DataSource
+	public static class DataSource
     {
         private static IList<Book> _books { get; set; }
 
@@ -19,39 +20,39 @@ namespace BookStore.Data
             _books = new List<Book>();
 
             // book #1
-            Book book = new Book
-            {
-                Id = 1,
-                ISBN = "978-0-321-87758-1",
-                Title = "Essential C#5.0",
-                Author = "Mark Michaelis",
-                Price = 59.99m,
-                Location = new Address { City = "Redmond", Street = "156TH AVE NE" },
-                Press = new Press
+            Book book = new Book();
+            book.AddBook(
+                1,
+                "978-0-321-87758-1",
+                "Essential C#5.0",
+                "Mark Michaelis",
+                59.99m,
+                new Address { City = "Redmond", Street = "156TH AVE NE" },
+                new Press
                 {
                     Id = 1,
                     Name = "Addison-Wesley",
-                    Category = Category.Book
+                    Category = ICategory.Book
                 }
-            };
+                );
+            
             _books.Add(book);
 
             // book #2
-            book = new Book
-            {
-                Id = 2,
-                ISBN = "063-6-920-02371-5",
-                Title = "Enterprise Games",
-                Author = "Michael Hugos",
-                Price = 49.99m,
-                Location = new Address { City = "Bellevue", Street = "Main ST" },
-                Press = new Press
+            book.AddBook(
+                2,
+                "063-6-920-02371-5",
+                "Enterprise Games",
+                "Michael Hugos",
+                49.99m,
+                new Address { City = "Bellevue", Street = "Main ST" },
+                new Press
                 {
                     Id = 2,
                     Name = "O'Reilly",
-                    Category = Category.EBook,
+                    Category = ICategory.EBook,
                 }
-            };
+            );
 
             _books.Add(book);
 
@@ -69,7 +70,7 @@ namespace BookStore.Data
                     .RuleFor(x => x.Author, f => f.Person.FullName)
                     .RuleFor(x => x.Price, f => f.Commerce.Price(min, max, decimals).FirstOrDefault())
                     .RuleFor(x => x.Location, f => new Address { City = f.Address.City(), Street = f.Address.StreetName() })
-                    .RuleFor(x => x.Press, f => new Press { Id = ids, Name = f.Commerce.ProductName(), Category = Category.EBook });
+                    .RuleFor(x => x.Press, f => new Press { Id = ids, Name = f.Commerce.ProductName(), Category = ICategory.EBook });
 
                 // generate 1000 items
                 _books.Add(book);
